@@ -18,12 +18,20 @@ public class Calculate {
     }
 
     // 나눗셈
-    public int divide(int a, int b){
-        if (b == 0) {
-            System.out.println("0으로 나누기 불가");
-            return -1;
+    public void divide(int a, int b){
+        try {
+            int result = a / b;
+        } catch (ArithmeticException e) {
+            System.out.println("0으로 나눌 수 없습니다.");
+        } finally {
+            System.out.println("프로그램 종료");
         }
-        return a / b;
+
+//        if (b == 0) {
+//            System.out.println("0으로 나누기 불가");
+//            return -1;
+//        }
+//        return a / b;
     }
 
 
@@ -31,11 +39,12 @@ public class Calculate {
         Calculate calc = new Calculate();
 
         int a = 10;
-        int b = 5;
+        int b = 0;
 
         System.out.println("덧셈: " + calc.add(a, b));
         System.out.println("뺄셈: " + calc.subtract(a, b));
         System.out.println("곱셈: " + calc.multiply(a, b));
-        System.out.println("나눗셈: " + calc.divide(a, b));
+//        System.out.println("나눗셈: " + calc.divide(a, b));
+        calc.divide(a, b);
     }
 }
