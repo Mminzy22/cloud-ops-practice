@@ -12,6 +12,7 @@
 ├── project02/    # 
 ├── project03/    # 과제 3: AWS KMS 암호화/복호화 예제 등 클라우드 관련 실습 프로젝트
 ├── project04/    # 과제 4: CI/CD 자동화 및 스프링 부트 기반 클라우드 배포 실습
+├── project05/ # 과제 5: 도커 기반 API 서버 컨테이너화 및 실행 실습
 │
 └── README.md     # 리포지토리 설명 파일
 ```
@@ -39,6 +40,11 @@
    - **주제**: CI/CD 자동화 및 클라우드 배포 실습
    - **기술**: Spring Boot, GitHub Actions, Gradle, Shell Script
    - **목표**: GitHub Actions를 활용한 자동 빌드 및 배포 파이프라인 구현
+
+5. **[project05](project05/)**
+   - **주제**: Spring Boot API 서버 도커라이징
+   - **기술**: Docker, Spring Boot, Gradle, REST API, Draw.io 아키텍처 설계
+   - **목표**: REST API 서버를 Docker 기반으로 패키징하고 실행 환경 구축까지 실습
 
 ---
 
