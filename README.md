@@ -8,7 +8,9 @@
 
 ```
 . 
-├──  project01/        # 과제 1: 변수, 연산자, 조건문, 반복문 등 Java 문법 예제 작성
+├── project01/    # 과제 1: 변수, 연산자, 조건문, 반복문 등 Java 문법 예제 작성
+├── project02/    # 
+├── project03/    # 과제 3: AWS KMS 암호화/복호화 예제 등 클라우드 관련 실습 프로젝트
 │
 └── README.md          # 리포지토리 설명 파일
 ```
@@ -21,6 +23,16 @@
    - **주제**: Java 기초 문법 연습
    - **기술**: 변수 선언, 산술/대입/비교/논리/증감/조건(삼항) 연산자, 제어문(if, switch), 반복문(for, while, do-while)
    - **목표**: Java의 기본 문법을 이해하고 콘솔 출력으로 동작을 확인
+
+2. **[project02](project02/)**
+   - **주제**: 
+   - **기술**: 
+   - **목표**: 
+
+3. **[project03](project03/)**
+   - **주제**: AWS KMS 암호화/복호화 실습
+   - **기술**: Spring Boot, Java, KMS SDK, Gradle 기반 프로젝트 구조
+   - **목표**: AWS Key Management Service를 활용한 보안 기능 실습
 
 ---
 
