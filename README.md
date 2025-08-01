@@ -11,8 +11,9 @@
 ├── project01/    # 과제 1: 변수, 연산자, 조건문, 반복문 등 Java 문법 예제 작성
 ├── project02/    # 
 ├── project03/    # 과제 3: AWS KMS 암호화/복호화 예제 등 클라우드 관련 실습 프로젝트
+├── project04/    # 과제 4: CI/CD 자동화 및 스프링 부트 기반 클라우드 배포 실습
 │
-└── README.md          # 리포지토리 설명 파일
+└── README.md     # 리포지토리 설명 파일
 ```
 
 ---
@@ -33,6 +34,11 @@
    - **주제**: AWS KMS 암호화/복호화 실습
    - **기술**: Spring Boot, Java, KMS SDK, Gradle 기반 프로젝트 구조
    - **목표**: AWS Key Management Service를 활용한 보안 기능 실습
+
+4. **[project04](project04/)**
+   - **주제**: CI/CD 자동화 및 클라우드 배포 실습
+   - **기술**: Spring Boot, GitHub Actions, Gradle, Shell Script
+   - **목표**: GitHub Actions를 활용한 자동 빌드 및 배포 파이프라인 구현
 
 ---
 
