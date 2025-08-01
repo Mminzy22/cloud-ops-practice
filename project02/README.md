@@ -3007,7 +3007,6 @@ public class UserService {
 
 ## 🧱 UML 구조
 
-```
 
 ```
         +------------------+
@@ -3026,8 +3025,6 @@ public class UserService {
                          |       ConcreteDecorator       |
                          +-------------------------------+
 ```
-
-````
 
 ---
 
@@ -3094,7 +3091,7 @@ public class CoffeeShop {
         System.out.println("Price: " + coffee.cost() + "원");
     }
 }
-````
+```
 
 ### ▶️ 출력 예시
 
