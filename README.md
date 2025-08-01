@@ -31,7 +31,7 @@
    - **주제**: Java 문법 복습 및 단원별 실습 정리
    - **기술**: 클래스 분리, 패키지 구조화, 단위별 테스트 실행
    - **목표**: 기존에 학습한 Java 문법을 단원별로 분리하고 모듈화된 코드로 체계적으로 정리
-   > 📂 해당 프로젝트의 단원별 과제 정리 및 코드 설명은 [`project02/README.md`](project02/README.md) 파일에 상세히 기록되어 있습니다.
+   - 📂 해당 프로젝트의 단원별 과제 정리 및 코드 설명은 [`project02/README.md`](project02/README.md) 파일 참고
 
 3. **[project03](project03/)**
    - **주제**: AWS KMS 암호화/복호화 실습
@@ -52,39 +52,7 @@
    - **주제**: 상품 테이블(products) 기반 REST API 서버 구현
    - **기술**: Spring Boot, JPA, Gradle, REST API, Swagger(OpenAPI), Docker
    - **목표**: 실제 업무 데이터베이스 테이블 설계를 기반으로 상품 정보 API를 개발하고, 이를 컨테이너화하여 실행 가능한 환경 구성
-      <details>
-      <summary><strong>📦 담당 테이블: <code>products</code></strong></summary>
-
-      <br>
-
-      #### 컬럼 구성
-
-      | 컬럼명       | 타입               | 설명         |
-      |------------|------------------|------------|
-      | product_id | INT PK AUTO_INCREMENT | 상품 ID (PK) |
-      | name       | VARCHAR(100)     | 상품명       |
-      | description| TEXT             | 상품 설명     |
-      | category   | VARCHAR(50)      | 카테고리      |
-      | price      | DECIMAL(10,2)    | 가격         |
-      | stock_qty  | INT              | 재고 수량     |
-
-      ---
-
-      #### 구현 범위
-
-      - Entity 클래스 작성
-      - Repository (JpaRepository) 구현
-      - CRUD 기능 포함한 Service 계층 구현
-      - RESTful 방식의 Controller 작성
-      - Swagger를 활용한 API 문서화
-
-      ---
-
-      #### 비즈니스 제약조건
-
-      - 상품 재고(`stock_qty`)는 0보다 작을 수 없음
-
-      </details>
+   - 📂 상세 테이블 구성 및 과제 설명은 [`project06/README.md`](project06/README.md) 파일 참고
 
 ---
 
