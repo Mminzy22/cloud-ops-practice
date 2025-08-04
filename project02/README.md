@@ -3928,3 +3928,37 @@ public class Main {
 * 파일 시스템, 조직 구조, UI 컴포넌트 트리 등에서 자주 활용됩니다.
 
 </details>
+
+---
+
+<details>
+<summary><strong>📘 Advanced unit 16 – GitHub Actions를 활용한 ECS 자동 배포</strong></summary>
+
+<br>
+
+## 1. ECS 자동화 배포 실습
+
+## 🧑‍💻 **과제 개요**
+
+* **주제**: GitHub Actions를 이용해 본인의 Java 프로젝트를 AWS ECS에 자동 배포
+* **목표**:
+
+  * main 브랜치에 push 시 GitHub Actions가 실행되어
+  * 도커 이미지 빌드 → ECR 푸시 → ECS 서비스 재배포까지 자동화
+
+---
+
+## 🚀 **과제 상세 내용**
+
+### 1️⃣ 요구사항
+
+| 항목                  | 설명                                          |
+| ------------------- | ------------------------------------------- |
+| ✅ GitHub Actions 구성 | main 브랜치 push 시 자동 실행                       |
+| ✅ Docker 이미지 빌드     | Gradle로 프로젝트 빌드 후 도커 이미지 생성                 |
+| ✅ ECR 푸시            | AWS ECR에 이미지 푸시                             |
+| ✅ ECS Task 정의       | GitHub Actions에서 task-definition.json 자동 생성 |
+| ✅ ECS 재배포           | ECS 서비스가 최신 태스크 정의로 업데이트됨                   |
+| ✅ 확인                | 실제 컨테이너 갱신 및 변경 사항 반영 여부 확인                 |
+
+</details>
