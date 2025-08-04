@@ -3932,7 +3932,7 @@ public class Main {
 ---
 
 <details>
-<summary><strong>📘 Advanced unit 16 – GitHub Actions를 활용한 ECS 자동 배포</strong></summary>
+<summary><strong>📘 Basic unit 16 – GitHub Actions를 활용한 ECS 자동 배포</strong></summary>
 
 <br>
 
