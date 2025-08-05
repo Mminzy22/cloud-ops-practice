@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: S3 + EC2
+
+Parameters:
+  InstanceType:
+    Type: String
+    Default: t2.micro
+
+Resources:
+  MyBucket:
+    Type: AWS::S3::Bucket
+
+  MyInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-008e20914908f5345
+      InstanceType: t2.micro
+      Tags:
+        - Key: Name
+          Value: !Sub "${AWS::StackName}-Instance"
+
+Outputs:
+  InstanceId:
+    Description: EC2 Instance ID
+    Value: !Ref MyInstance
