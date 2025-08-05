@@ -59,6 +59,7 @@
    - **주제**: EC2 인스턴스, S3, ALB, Auto Scaling 구성 템플릿 실습
    - **기술**: AWS CloudFormation, EC2, S3, ALB, Auto Scaling Group, Bash Script
    - **목표**: CloudFormation을 통해 AWS 인프라를 코드로 배포하고, 웹 서버의 고가용성 및 확장성을 실습
+   - 📂 주요 템플릿 및 스크립트 구성은 [`project07/README.md`](project07/README.md) 파일 참고
 
 ---
 
