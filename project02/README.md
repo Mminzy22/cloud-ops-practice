@@ -3962,3 +3962,172 @@ public class Main {
 | ✅ 확인                | 실제 컨테이너 갱신 및 변경 사항 반영 여부 확인                 |
 
 </details>
+
+---
+
+<details>
+<summary><strong>📘 Basic unit 17 – 리팩토링(Refactoring)</strong></summary>
+
+<br>
+
+## 📌 과제 개요
+
+* **주제**: Java 리팩토링 개념 학습 및 적용
+* **목표**: 조건문 기반 계산기를 전략 패턴 기반 구조로 리팩토링하여, 가독성·확장성·유지보수성을 높이는 구조로 구현
+
+---
+
+## 🎯 학습 포인트
+
+* 리팩토링의 정의와 목적 (기능 유지 + 내부 구조 개선)
+* 대표적인 리팩토링 기법 학습
+
+  * 중복 코드 제거
+  * 메서드 추출
+  * 조건문 제거 → 다형성으로 전환
+  * 캡슐화, 클래스 분리 등
+
+---
+
+## 🔧 구현 내용 요약
+
+| 구현 항목                               | 설명                               |
+| ----------------------------------- | -------------------------------- |
+| `OperatorType` enum                 | 문자열 대신 타입 기반 연산자 식별              |
+| `Operation` 인터페이스                   | 전략 패턴 기반 연산 정의용 인터페이스            |
+| `AddOperation`, `SubOperation`, ... | 연산별 구현 클래스 분리                    |
+| `OperationRegistry`                 | 연산자-전략 객체 매핑 전용 클래스              |
+| `Calculator`                        | calculate() 메서드에서 전략 객체 위임 실행    |
+| `CalculatorMain`                    | 실행용 클래스에서 runTest()로 테스트 분리 및 출력 |
+
+---
+
+## 🧪 실행 결과 예시
+
+```
+add(5, 3) = 8 (예상: 8) [PASS]
+sub(10, 4) = 6 (예상: 6) [PASS]
+mul(3, 7) = 21 (예상: 21) [PASS]
+div(20, 5) = 4 (예상: 4) [PASS]
+div(10, 0) 예외 발생 예상대로: 0으로 나눌 수 없습니다. [PASS]
+mod(10, 3) 예외 발생 예상대로: 잘못된 연산자입니다: mod [PASS]
+```
+
+---
+
+</details>
+
+---
+
+<details>
+<summary><strong>📙 Advanced unit 14 – Strategy Pattern</strong></summary>
+
+<br>
+
+## 📌 과제 개요
+
+* **주제**: 전략 패턴(Strategy Pattern)의 구조와 장점 학습
+* **목표**: 조건문 없이 전략 객체로 알고리즘을 주입받아 처리할 수 있는 설계 패턴을 이해하고 적용
+
+---
+
+## 🧠 Strategy 패턴이란?
+
+> 알고리즘(전략)을 인터페이스로 추상화하여, 실행 시 구체 전략을 동적으로 바꿔 끼울 수 있는 패턴입니다.
+
+* 조건문 제거
+* 테스트 및 유지보수 용이
+* OCP/SRP에 부합
+
+---
+
+## 📦 구조
+
+```
+[Context] ─────────────┐
+                      ▼
+            [Strategy interface]
+               ▲         ▲
+           [StrategyA] [StrategyB]
+```
+
+---
+
+## 🧪 자바 예제: 할인 전략 적용
+
+### 1. 전략 인터페이스
+
+```java
+public interface DiscountStrategy {
+    int calculateDiscount(int price);
+}
+```
+
+### 2. 전략 구현 클래스
+
+```java
+public class FixedDiscount implements DiscountStrategy {
+    public int calculateDiscount(int price) {
+        return price - 1000;
+    }
+}
+```
+
+```java
+public class RateDiscount implements DiscountStrategy {
+    public int calculateDiscount(int price) {
+        return (int)(price * 0.9);
+    }
+}
+```
+
+### 3. Context 클래스
+
+```java
+public class Order {
+    private final DiscountStrategy discountStrategy;
+    public Order(DiscountStrategy discountStrategy) {
+        this.discountStrategy = discountStrategy;
+    }
+    public void checkout(int price) {
+        int discounted = discountStrategy.calculateDiscount(price);
+        System.out.println("최종 결제 금액: " + discounted + "원");
+    }
+}
+```
+
+### 4. 사용 예
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        new Order(new FixedDiscount()).checkout(10000); // 9000원
+        new Order(new RateDiscount()).checkout(10000);  // 9000원
+    }
+}
+```
+
+---
+
+## 🔄 리팩토링 효과 비교
+
+| 항목            | Before (조건문) | After (Strategy) |
+| ------------- | ------------ | ---------------- |
+| 조건문 if/switch | ✅ 있음         | ❌ 없음             |
+| 테스트 편의성       | ❌ 낮음         | ✅ 높음             |
+| 새로운 전략 추가     | 조건문 수정 필요    | 새 클래스만 추가        |
+| SRP           | 위반           | 준수               |
+
+---
+
+## ✅ 마무리 요약
+
+| 항목    | 내용                         |
+| ----- | -------------------------- |
+| 목적    | 알고리즘 캡슐화, 동적 교체            |
+| 장점    | 조건문 제거, 테스트/확장 용이          |
+| 패턴 분류 | 행위 패턴 (Behavioral Pattern) |
+
+---
+
+</details>
