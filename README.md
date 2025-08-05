@@ -14,6 +14,7 @@
 ├── project04/    # 과제 4: CI/CD 자동화 및 스프링 부트 기반 클라우드 배포 실습
 ├── project05/    # 과제 5: 도커 기반 API 서버 컨테이너화 및 실행 실습
 ├── project06/    # 과제 6: 상품 테이블(products) 기반 REST API 서버 구현 실습
+├── project07/    # 과제 7: EC2, S3, ALB, Auto Scaling 구성 CloudFormation 실습
 │
 └── README.md     # 리포지토리 설명 파일
 ```
@@ -53,6 +54,11 @@
    - **기술**: Spring Boot, JPA, Gradle, REST API, Swagger(OpenAPI), Docker
    - **목표**: 실제 업무 데이터베이스 테이블 설계를 기반으로 상품 정보 API를 개발하고, 이를 컨테이너화하여 실행 가능한 환경 구성
    - 📂 상세 테이블 구성 및 과제 설명은 [`project06/README.md`](project06/README.md) 파일 참고
+
+7. **[project07](project07/)**
+   - **주제**: EC2 인스턴스, S3, ALB, Auto Scaling 구성 템플릿 실습
+   - **기술**: AWS CloudFormation, EC2, S3, ALB, Auto Scaling Group, Bash Script
+   - **목표**: CloudFormation을 통해 AWS 인프라를 코드로 배포하고, 웹 서버의 고가용성 및 확장성을 실습
 
 ---
 
