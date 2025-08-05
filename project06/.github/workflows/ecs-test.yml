@@ -1,120 +1,76 @@
-name: Build and Deploy to ECS
+name: Deploy to Amazon ECS
 
 on:
   push:
     branches:
       - main
 
+env:
+  AWS_REGION: ap-northeast-2
+  ECR_REPOSITORY: minji
+  ECS_SERVICE: minji-task-service
+  ECS_CLUSTER: next-team4-ecs-cluster
+  ECS_TASK_DEFINITION: ./task-definition.json
+  CONTAINER_NAME: minji-ecr
+
 jobs:
-  build:
-    name: Build and Push Docker Image
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
+    environment: production
 
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up JDK 17
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
-          distribution: 'temurin'
           java-version: '17'
+          distribution: 'temurin'
 
-      - name: Grant execute permission for Gradle
+      - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
       - name: Build with Gradle
         run: ./gradlew build
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v2
+        uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
 
-      - name: Build and Push Docker Image
+      - name: Build, tag, and push image to Amazon ECR
         id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          IMAGE_NAME=${{ secrets.IMAGE_NAME }}
-          IMAGE_TAG=${{ secrets.IMAGE_TAG }}
-          CONTAINER_NAME=${{ secrets.CONTAINER_NAME }}
-          ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
-          IMAGE_URI=$ECR_REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+          # Build a docker container and
+          # push it to ECR so that it can
+          # be deployed to ECS.
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-          docker build -t $IMAGE_NAME .
-          docker tag $IMAGE_NAME $IMAGE_URI
-          docker push $IMAGE_URI
-
-          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
-
-      - name: Generate ECS Task Definition file
-        run: |
-          mkdir -p build/deploy
-          echo '{' > build/deploy/task-definition.json
-          echo '  "family": "${{ secrets.TASK_FAMILY }}",' >> build/deploy/task-definition.json
-          echo '  "networkMode": "awsvpc",' >> build/deploy/task-definition.json
-          echo '  "requiresCompatibilities": ["FARGATE"],' >> build/deploy/task-definition.json
-          echo '  "cpu": "256",' >> build/deploy/task-definition.json
-          echo '  "memory": "512",' >> build/deploy/task-definition.json
-          echo '  "executionRoleArn": "${{ secrets.EXECUTION_ROLE_ARN }}",' >> build/deploy/task-definition.json
-          echo '  "containerDefinitions": [' >> build/deploy/task-definition.json
-          echo '    {' >> build/deploy/task-definition.json
-          echo '      "name": "${{ secrets.CONTAINER_NAME }}",' >> build/deploy/task-definition.json
-          echo '      "image": "${{ env.IMAGE_URI }}",' >> build/deploy/task-definition.json
-          echo '      "portMappings": [{' >> build/deploy/task-definition.json
-          echo '        "containerPort": 8080,' >> build/deploy/task-definition.json
-          echo '        "hostPort": 8080,' >> build/deploy/task-definition.json
-          echo '        "protocol": "tcp"' >> build/deploy/task-definition.json
-          echo '      }],' >> build/deploy/task-definition.json
-          echo '      "essential": true,' >> build/deploy/task-definition.json
-          echo '      "logConfiguration": {' >> build/deploy/task-definition.json
-          echo '        "logDriver": "awslogs",' >> build/deploy/task-definition.json
-          echo '        "options": {' >> build/deploy/task-definition.json
-          echo '          "awslogs-group": "/ecs/${{ secrets.TASK_FAMILY }}",' >> build/deploy/task-definition.json
-          echo '          "awslogs-region": "ap-northeast-2",' >> build/deploy/task-definition.json
-          echo '          "awslogs-stream-prefix": "ecs"' >> build/deploy/task-definition.json
-          echo '        }' >> build/deploy/task-definition.json
-          echo '      }' >> build/deploy/task-definition.json
-          echo '    }' >> build/deploy/task-definition.json
-          echo '  ]' >> build/deploy/task-definition.json
-          echo '}' >> build/deploy/task-definition.json
-
-      - name: Upload task-definition.json
-        uses: actions/upload-artifact@v4
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@c804dfbdd57f713b6c079302a4c01db7017a36fc
         with:
-          name: task-def
-          path: build/deploy/task-definition.json
+          task-definition: ${{ env.ECS_TASK_DEFINITION }}
+          container-name: ${{ env.CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
 
-  deploy:
-    name: Deploy to Amazon ECS
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@df9643053eda01f169e64a0e60233aacca83799a
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-northeast-2
-
-      - name: Download task definition
-        uses: actions/download-artifact@v4
-        with:
-          name: task-def
-          path: build/deploy
-
-      - name: Deploy to Amazon ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          cluster: ${{ secrets.ECS_CLUSTER }}
-          service: ${{ secrets.ECS_SERVICE }}
-          task-definition: build/deploy/task-definition.json
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.ECS_SERVICE }}
+          cluster: ${{ env.ECS_CLUSTER }}
+          wait-for-service-stability: true
