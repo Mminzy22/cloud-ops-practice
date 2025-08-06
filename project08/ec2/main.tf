@@ -3,10 +3,10 @@ provider "aws" {
 }
 
 resource "aws_instance" "web" {
-	ami = "ami-0d6889d14c69512e9"
-	instance_type = "t2.micro"
-	tags = {
-		Name = "Terraform-Web-minji"
-	}
+  ami = var.ami_id
+  instance_type = var.instance_type
+  tags = {
+    Name = "Terraform-Web-minji"
+  }
 }
 
