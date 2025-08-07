@@ -16,6 +16,7 @@
 ├── project06/    # 과제 6: 상품 테이블(products) 기반 REST API 서버 구현 실습
 ├── project07/    # 과제 7: EC2, S3, ALB, Auto Scaling 구성 CloudFormation 실습
 ├── project08/    # 과제 8: Terraform 기반 AWS 인프라 코드화 실습
+├── project09/    # 과제 9: AWS Lambda 기반 웹 크롤링 및 S3 저장 실습
 │
 └── README.md     # 리포지토리 설명 파일
 ```
@@ -67,6 +68,13 @@
    - **기술**: Terraform, AWS VPC, EC2, ECS, ALB, 모듈 구조 설계
    - **목표**: 다양한 AWS 리소스를 Terraform으로 배포하고, 모듈화를 통해 재사용 가능한 인프라 구성 실습
    - 📂 주요 구성은 [`project08/README.md`](project08/README.md) 파일 참고
+
+9. **[project09](project09/)**
+   - **주제**: AWS Lambda 기반 웹 크롤링 및 S3 저장 실습
+   - **기술**: AWS Lambda(Python 3.x), Amazon S3, CloudWatch Logs, Lambda Layer, `requests`·`boto3` 라이브러리
+   - **목표**: Lambda 함수를 이용해 웹 페이지(네이버 부동산) HTML을 주기적으로 크롤링하여 S3 버킷에 저장하고, CloudWatch를 통해 로그를 모니터링. Lambda Layer를 활용하여 공통 라이브러리를 분리 관리하는 방법 실습
+   - 📂 주요 구성 및 실습 절차는 [`project09/README.md`](project09/README.md) 파일 참고
+
 ---
 
 ## 📈 학습 목표
