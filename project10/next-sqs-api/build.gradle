@@ -10,7 +10,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'software.amazon.awssdk:sqs:2.25.38' // AWS SDK for Java v2
+    implementation 'software.amazon.awssdk:sqs:2.25.38'
+    implementation 'redis.clients:jedis:5.1.2'
 }
 
 java {
